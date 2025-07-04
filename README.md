@@ -2,8 +2,8 @@
 
 **TypeScript library for building secure cloud services as backends for mobile apps. No API keys. Full control.**
 
-[![npm version](https://img.shields.io/npm/v/@calljmp/service)](https://www.npmjs.com/package/@calljmp/service)
-[![GitHub license](https://img.shields.io/github/license/calljmp/calljmp)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@calljmp/service)](https://www.npmjs.com/package/@calljmp/calljmp-service)
+[![GitHub license](https://img.shields.io/github/license/calljmp/calljmp-service)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)](https://www.typescriptlang.org/)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange)](https://workers.cloudflare.com/)
 
