@@ -11,15 +11,12 @@ export interface CloudServiceContext {
   development: boolean;
 }
 
-export interface BaseCloudServiceEnv {
-  db: D1Database;
-  DEVELOPMENT?: boolean;
-  buckets: Record<string, R2Bucket>;
-  secrets: Record<string, string>;
-  variables: Record<string, string>;
+export interface CloudServiceTypes {
+  [key: string]: unknown;
 }
 
-export interface CloudServiceEnv extends BaseCloudServiceEnv {
-  db: D1Database;
+export interface CloudServiceEnv {
+  DATABASE: D1Database;
   DEVELOPMENT?: boolean;
+  [key: string]: any;
 }

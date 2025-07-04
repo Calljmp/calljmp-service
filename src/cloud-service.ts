@@ -1,4 +1,9 @@
-import { Platform, CloudServiceContext, CloudServiceEnv } from './types';
+import {
+  Platform,
+  CloudServiceContext,
+  CloudServiceEnv,
+  CloudServiceTypes,
+} from './types';
 
 const CLOUD_SERVICE_ARGS_HEADER = 'X-Calljmp-Args';
 
@@ -62,6 +67,40 @@ class CloudServiceArgs {
 export abstract class CloudService {
   private _context?: CloudServiceContext;
   private _env?: CloudServiceEnv;
+  private _buckets?: CloudServiceTypes['buckets'];
+  private _secrets?: CloudServiceTypes['secrets'];
+  private _variables?: CloudServiceTypes['variables'];
+
+  private _sanitizeName(name: string): string {
+    // Handle UPPER_CASE: convert to camelCase
+    if (name.includes('_')) {
+      return name
+        .toLowerCase()
+        .split('_')
+        .map((word, index) =>
+          index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join('');
+    }
+
+    // Handle camelCase or PascalCase: ensure first letter is lowercase
+    return name.charAt(0).toLowerCase() + name.slice(1);
+  }
+
+  private _extractEnvByPrefix(prefix: string): Record<string, unknown> {
+    if (!this._env) {
+      throw new Error('Environment not set');
+    }
+
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(this._env)) {
+      if (key.startsWith(prefix)) {
+        const sanitizedKey = this._sanitizeName(key.replace(prefix, ''));
+        result[sanitizedKey] = value;
+      }
+    }
+    return result;
+  }
 
   get context(): CloudServiceContext {
     if (!this._context) {
@@ -74,28 +113,31 @@ export abstract class CloudService {
     if (!this._env) {
       throw new Error('Environment not set');
     }
-    return this._env.db;
+    return this._env.DATABASE;
   }
 
-  get buckets(): CloudServiceEnv['buckets'] {
-    if (!this._env) {
-      throw new Error('Environment not set');
+  get buckets(): CloudServiceTypes['buckets'] {
+    if (this._buckets) {
+      return this._buckets;
     }
-    return this._env.buckets || {};
+    this._buckets = this._extractEnvByPrefix('BUCKET_');
+    return this._buckets;
   }
 
-  get secrets(): CloudServiceEnv['secrets'] {
-    if (!this._env) {
-      throw new Error('Environment not set');
+  get secrets(): CloudServiceTypes['secrets'] {
+    if (this._secrets) {
+      return this._secrets;
     }
-    return this._env.secrets || {};
+    this._secrets = this._extractEnvByPrefix('SECRET_');
+    return this._secrets;
   }
 
-  get variables(): CloudServiceEnv['variables'] {
-    if (!this._env) {
-      throw new Error('Environment not set');
+  get variables(): CloudServiceTypes['variables'] {
+    if (this._variables) {
+      return this._variables;
     }
-    return this._env.variables || {};
+    this._variables = this._extractEnvByPrefix('VARIABLE_');
+    return this._variables;
   }
 
   async fetch(
@@ -104,6 +146,11 @@ export abstract class CloudService {
     executionCtx?: ExecutionContext
   ): Promise<Response> {
     this._env = env;
+
+    this._buckets = undefined;
+    this._secrets = undefined;
+    this._variables = undefined;
+
     this._context = {
       platform: Platform.Unknown,
       serviceId: null,
