@@ -1,0 +1,31 @@
+{
+  "name": "@calljmp/service",
+  "version": "0.0.1",
+  "description": "Calljmp cloud service",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "calljmp",
+    "cloudflare",
+    "workers",
+    "service"
+  ],
+  "author": "Calljmp",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250410.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/calljmp/calljmp-service.git",
+    "directory": "libs/service"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "name": "service-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/service/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "libs/service/dist",
+        "main": "libs/service/src/index.ts",
+        "tsConfig": "libs/service/tsconfig.lib.json",
+        "assets": [
+          {
+            "glob": "libs/service/package.json",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "libs/service/README.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "libs/service/LICENSE",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "cwd": "libs/service/dist",
+        "commands": [
+          "../tools/package.sh"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/service/**/*.ts"
+        ]
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/service",
+        "commands": [
+          "tsc -p tsconfig.json --noEmit"
+        ]
+      }
+    },
+    "publish:git": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "typecheck"
+      ],
+      "options": {
+        "cwd": "libs/service",
+        "commands": [
+          "./tools/git-publish.sh"
+        ]
+      }
+    },
+    "publish:npm": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "package"
+      ],
+      "options": {
+        "cwd": "libs/service/dist",
+        "commands": [
+          "npm publish --access public"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
