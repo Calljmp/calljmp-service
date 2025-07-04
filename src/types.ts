@@ -19,4 +19,7 @@ export interface BaseCloudServiceEnv {
   variables: Record<string, string>;
 }
 
-export type CloudServiceEnv = BaseCloudServiceEnv;
+export interface CloudServiceEnv extends BaseCloudServiceEnv {
+  db: D1Database;
+  DEVELOPMENT?: boolean;
+}
