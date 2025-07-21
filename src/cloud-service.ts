@@ -72,19 +72,15 @@ export abstract class CloudService {
   private _variables?: CloudServiceTypes['variables'];
 
   private _sanitizeName(name: string): string {
-    // Handle UPPER_CASE: convert to camelCase
-    if (name.includes('_')) {
-      return name
-        .toLowerCase()
-        .split('_')
-        .map((word, index) =>
-          index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
-        )
-        .join('');
-    }
-
-    // Handle camelCase or PascalCase: ensure first letter is lowercase
-    return name.charAt(0).toLowerCase() + name.slice(1);
+    return name
+      .split('_')
+      .map((word, index) => {
+        const lowerWord = word.toLowerCase();
+        return index === 0
+          ? lowerWord
+          : lowerWord.charAt(0).toUpperCase() + lowerWord.slice(1);
+      })
+      .join('');
   }
 
   private _extractEnvByPrefix(prefix: string): Record<string, unknown> {

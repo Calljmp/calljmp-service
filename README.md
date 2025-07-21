@@ -7,27 +7,26 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)](https://www.typescriptlang.org/)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange)](https://workers.cloudflare.com/)
 
-## 🚀 Overview
+## Overview
 
-The **Calljmp Service Library** is a TypeScript library designed for **building secure cloud services** that serve as backends for mobile applications. It provides:
+**Calljmp** is a secure backend-as-a-service designed for mobile developers. The **Service Library** provides TypeScript tools for building custom cloud services that serve as backends for your mobile applications.
 
-- ✅ **Type-safe service development** with full TypeScript support
-- ✅ **Cloudflare Workers runtime** compatibility for edge deployment
-- ✅ **Database access patterns** for SQLite operations
+### Key Features
 
-🔹 **Website**: [calljmp.com](https://calljmp.com)  
-🔹 **Follow**: [@calljmpdev](https://x.com/calljmpdev)
+- **Authentication** via **App Attestation (iOS)** and **Play Integrity (Android)**
+- **Full SQLite database access** with no restrictions
+- **Secure cloud storage** with organized bucket management
+- **Type-safe service development** with full TypeScript support
+- **Cloudflare Workers runtime** compatibility for edge deployment
+- **Dynamic permissions** for users & roles
 
-## 📑 Table of Contents
-
-- [🚀 Overview](#-overview)
-- [📦 Installation](#-installation)
-- [📄 License](#-license)
-- [💬 Support & Community](#-support--community)
+**Website**: [calljmp.com](https://calljmp.com)  
+**Documentation**: [docs.calljmp.com](https://docs.calljmp.com)  
+**Follow**: [@calljmpdev](https://x.com/calljmpdev)
 
 ---
 
-## 📦 Installation
+## Installation
 
 Install the service library via npm:
 
@@ -41,13 +40,28 @@ or via yarn:
 yarn add @calljmp/service
 ```
 
+## Getting Started
+
+The Calljmp Service Library enables you to build custom backend services with TypeScript. Your services can handle authentication, database operations, file storage, and custom business logic.
+
+For detailed usage examples, API reference, and comprehensive guides, visit our [documentation](https://docs.calljmp.com).
+
+### Available Features
+
+- **Service Creation**: Build HTTP services with routing and middleware
+- **Database Integration**: Direct SQLite access with type-safe queries
+- **Authentication Handling**: Integrate with Calljmp's secure authentication
+- **Storage Operations**: File upload, download, and management
+- **Environment Variables**: Secure configuration management
+- **Cloudflare Workers**: Edge deployment capabilities
+
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 💬 Support & Community
+## Support & Community
 
 If you have any questions or feedback:
 
